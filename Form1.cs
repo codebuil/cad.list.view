@@ -242,5 +242,48 @@ namespace batView
             }
 
         }
+
+        private void savebinaryToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            if (textBox1.Text != "")
+            {
+                const string Header = "batcad";
+
+                using (var fileStream = new FileStream(textBox1.Text, FileMode.Create))
+                using (var binaryWriter = new BinaryWriter(fileStream))
+                {
+                    // Write header
+                    var headerBytes = System.Text.Encoding.ASCII.GetBytes(Header);
+                    binaryWriter.Write(headerBytes);
+
+                    // Write file size
+                    var fileSize = (int)lstItens.Items.Count;
+                    binaryWriter.Write(fileSize);
+                    int v = 1;
+                    // Write data
+                    foreach (string item in listaDeItens)
+                    {
+                        string[] listss = item.Split(",");
+                        if (listss.Length > 4)
+                        {
+                            int xxx = int.Parse(listss[1]);
+                            int yyy = int.Parse(listss[2]);
+                            int xxx2 = int.Parse(listss[3]);
+                            int yyy2 = int.Parse(listss[4]);
+                            
+                            binaryWriter.Write(v);
+                            binaryWriter.Write(xxx);
+                            binaryWriter.Write(yyy);
+                            binaryWriter.Write(xxx2);
+                            binaryWriter.Write(yyy2);
+                        }
+                    }
+                    binaryWriter.Close();
+
+                }
+            }
+
+        }
     }
     }
