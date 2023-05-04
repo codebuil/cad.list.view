@@ -6,9 +6,38 @@ namespace batView
     {
         private List<string> listaDeItens = new List<string>();
         int value = -1;
+        double scale = 600.00;
+        double units = 10.00;
+
         public Form1()
         {
             InitializeComponent();
+        }
+        double wasm_draw3Dx(double x, double y, double z)
+        {
+            double zz = (z + 1.00) * 1.50;
+            double zzz = scale / zz;
+            double zzzz = scale / 2 - zzz / 2;
+            double zzzzz = (zzz / units) * x;
+            double zzzzzz = zzzz + zzzzz;
+            return zzzzzz;
+        }
+        double wasm_draw3Dy(double x, double y, double z)
+        {
+            double zz = (z + 1.00) * 1.50;
+            double zzz = scale / zz;
+            double zzzz = scale / 2 - zzz / 2;
+            double zzzzz = (zzz / units) * (units - y);
+            double zzzzzz = zzzz + zzzzz - (z * 2);
+            return zzzzzz;
+        }
+        void setScale(double sc)
+        {
+            scale = sc;
+        }
+        void setunits(double sc)
+        {
+            units = sc;
         }
 
         private void loadToolStripMenuItem_Click(object sender, EventArgs e)
@@ -284,6 +313,41 @@ namespace batView
                 }
             }
 
+        }
+
+        private void load3dbatToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            
+            
+            if (textBox1.Text != "" && File.Exists(textBox1.Text))
+            {
+                
+                bool b = false;
+                string[] linhas = System.IO.File.ReadAllLines(textBox1.Text); // Lê todas as linhas do arquivo
+
+                foreach (string linha in linhas) // Percorre cada linha do arquivo
+                {
+                    if (linha.StartsWith("line")) // Verifica se a linha começa com a string "line,0,0,100"
+                    {
+                        // Separa as coordenadas da linha
+                        string[] coords = linha.Split(',');
+                        if (coords.Count() > 6)
+                        {
+                            int x1 = (int)wasm_draw3Dx((double)int.Parse(coords[1].ToString()), (double)int.Parse(coords[2].ToString()), (double)int.Parse(coords[3].ToString()));
+                            int y1 = (int)wasm_draw3Dy((double)int.Parse(coords[1].ToString()), (double)int.Parse(coords[2].ToString()), (double)int.Parse(coords[3].ToString()));
+                            int x2 = (int)wasm_draw3Dx((double)int.Parse(coords[4].ToString()), (double)int.Parse(coords[5].ToString()), (double)int.Parse(coords[6].ToString()));
+                            int y2 = (int)wasm_draw3Dy((double)int.Parse(coords[4].ToString()), (double)int.Parse(coords[5].ToString()), (double)int.Parse(coords[6].ToString()));
+                            listaDeItens.Add("line," + x1.ToString() + "," + y1.ToString() + "," + x2.ToString() + "," + y2.ToString() + "");
+                            
+                            // Desenha a linha na picture1 em branco
+                            
+                        }
+                    }
+                }
+                // Atualiza a lista exibida na tela
+                AtualizarLista();
+
+            }
         }
     }
     }
