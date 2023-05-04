@@ -1,3 +1,5 @@
+using static System.Windows.Forms.LinkLabel;
+
 namespace batView
 {
     public partial class Form1 : Form
@@ -177,6 +179,68 @@ namespace batView
         private void Form1_Load(object sender, EventArgs e)
         {
             pictureBox1.Image = new Bitmap(800,800);
+        }
+
+        private void loadbinaryToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Limpa a lista atual
+            listaDeItens.Clear();
+            value = -1;
+            if (textBox1.Text != "" && File.Exists(textBox1.Text))
+            {
+
+                
+                const string Header = "batcad";
+                const int RecordSize = 20; // 5 integers * 4 bytes each
+
+                using (var fileStream = new FileStream(textBox1.Text, FileMode.Open))
+                using (var binaryReader = new BinaryReader(fileStream))
+                {
+                    // Read header
+
+                    var headerBytes = binaryReader.ReadBytes(Header.Length);
+                    var header = System.Text.Encoding.ASCII.GetString(headerBytes);
+                    if (header != Header)
+                    {
+
+                        return;
+                    }
+
+                    // Read file size
+                    Int32 fileSize = binaryReader.ReadInt32();
+                    var recordCount = fileSize;
+
+                    // Read records
+                    for (int i = 0; i < recordCount; i++)
+                    {
+
+                        int firstInt = (int)binaryReader.ReadInt32();
+                        if (firstInt == 1)
+                        {
+
+                            var ints = new int[5];
+                            for (int j = 0; j < 4; j++)
+                            {
+                                ints[j] = (int)binaryReader.ReadInt32();
+                            }
+
+
+                            listaDeItens.Add("line," + ints[0].ToString()+ "," + ints[1].ToString() + "," + ints[2].ToString() + "," + ints[3].ToString() +"");
+
+                        }
+
+
+
+
+                    }
+                    
+                    binaryReader.Close();
+                    
+                }
+                // Atualiza a lista exibida na tela
+                AtualizarLista();
+            }
+
         }
     }
     }
