@@ -40,13 +40,14 @@
             this.clearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadbinaryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.savebinaryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.load3dbatToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.lstItens = new System.Windows.Forms.ListBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.load3dbatToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.load3dbinaryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -75,7 +76,8 @@
             this.clearToolStripMenuItem,
             this.loadbinaryToolStripMenuItem,
             this.savebinaryToolStripMenuItem,
-            this.load3dbatToolStripMenuItem});
+            this.load3dbatToolStripMenuItem,
+            this.load3dbinaryToolStripMenuItem});
             this.menuToolStripMenuItem.Name = "menuToolStripMenuItem";
             this.menuToolStripMenuItem.Size = new System.Drawing.Size(60, 24);
             this.menuToolStripMenuItem.Text = "menu";
@@ -150,6 +152,13 @@
             this.savebinaryToolStripMenuItem.Text = "save_binary";
             this.savebinaryToolStripMenuItem.Click += new System.EventHandler(this.savebinaryToolStripMenuItem_Click);
             // 
+            // load3dbatToolStripMenuItem
+            // 
+            this.load3dbatToolStripMenuItem.Name = "load3dbatToolStripMenuItem";
+            this.load3dbatToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.load3dbatToolStripMenuItem.Text = "load_3d_bat";
+            this.load3dbatToolStripMenuItem.Click += new System.EventHandler(this.load3dbatToolStripMenuItem_Click);
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -201,12 +210,12 @@
             this.pictureBox1.TabIndex = 6;
             this.pictureBox1.TabStop = false;
             // 
-            // load3dbatToolStripMenuItem
+            // load3dbinaryToolStripMenuItem
             // 
-            this.load3dbatToolStripMenuItem.Name = "load3dbatToolStripMenuItem";
-            this.load3dbatToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
-            this.load3dbatToolStripMenuItem.Text = "load_3d_bat";
-            this.load3dbatToolStripMenuItem.Click += new System.EventHandler(this.load3dbatToolStripMenuItem_Click);
+            this.load3dbinaryToolStripMenuItem.Name = "load3dbinaryToolStripMenuItem";
+            this.load3dbinaryToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.load3dbinaryToolStripMenuItem.Text = "load_3d_binary";
+            this.load3dbinaryToolStripMenuItem.Click += new System.EventHandler(this.load3dbinaryToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -254,5 +263,6 @@
         private ToolStripMenuItem loadbinaryToolStripMenuItem;
         private ToolStripMenuItem savebinaryToolStripMenuItem;
         private ToolStripMenuItem load3dbatToolStripMenuItem;
+        private ToolStripMenuItem load3dbinaryToolStripMenuItem;
     }
 }

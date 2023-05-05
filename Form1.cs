@@ -349,5 +349,70 @@ namespace batView
 
             }
         }
+
+        private void load3dbinaryToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Limpa a lista atual
+            listaDeItens.Clear();
+            value = -1;
+            if (textBox1.Text != "" && File.Exists(textBox1.Text))
+            {
+
+
+                const string Header = "bat3d";
+                const int RecordSize = 20; // 5 integers * 4 bytes each
+
+                using (var fileStream = new FileStream(textBox1.Text, FileMode.Open))
+                using (var binaryReader = new BinaryReader(fileStream))
+                {
+                    // Read header
+
+                    var headerBytes = binaryReader.ReadBytes(Header.Length);
+                    var header = System.Text.Encoding.ASCII.GetString(headerBytes);
+                    if (header != Header)
+                    {
+
+                        return;
+                    }
+
+                    // Read file size
+                    Int32 fileSize = binaryReader.ReadInt32();
+                    var recordCount = fileSize;
+
+                    // Read records
+                    for (int i = 0; i < recordCount; i++)
+                    {
+
+                        int firstInt = (int)binaryReader.ReadInt32();
+                        if (firstInt == 1)
+                        {
+
+                            var ints = new int[9];
+                            for (int j = 0; j < 6; j++)
+                            {
+                                ints[j] = (int)binaryReader.ReadInt32();
+                            }
+                            int x1 = (int)wasm_draw3Dx((double)ints[0], (double)ints[1], (double)ints[2]);
+                            int y1 = (int)wasm_draw3Dy((double)ints[0], (double)ints[1], (double)ints[2]);
+                            int x2 = (int)wasm_draw3Dx((double)ints[3], (double)ints[4], (double)ints[5]); 
+                            int y2 = (int)wasm_draw3Dy((double)ints[3], (double)ints[4], (double)ints[5]);
+                            listaDeItens.Add("line," + x1.ToString() + "," + y1.ToString() + "," + x2.ToString() + "," + y2.ToString() + "");
+
+                            
+
+                        }
+
+
+
+
+                    }
+
+                    binaryReader.Close();
+
+                }
+                // Atualiza a lista exibida na tela
+                AtualizarLista();
+            }
+        }
     }
     }
